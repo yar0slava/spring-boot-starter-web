@@ -1,0 +1,15 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Form Control: POST</title>
+</head>
+<body>
+<th:block th:include="common::my-header" />
+After save:
+<br />
+name: <th:block th:text="${book.name}" />
+<br />
+ISBN: <th:block th:text="${book.ISBN}" />
+<br />
+author: <th:block th:text="${book.author}" />
+</body>
+</html>
