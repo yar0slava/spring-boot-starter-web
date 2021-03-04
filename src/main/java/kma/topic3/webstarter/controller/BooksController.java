@@ -1,34 +1,47 @@
 package kma.topic3.webstarter.controller;
 
 import kma.topic3.webstarter.model.Book;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import kma.topic3.webstarter.service.BooksService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
-@Controller
+@RestController
+@RequiredArgsConstructor
 public class BooksController {
 
-    List<Book> books = new ArrayList<>();
+    private final BooksService booksService;
 
-    @GetMapping("/book")
-    public String saveBook(){
-        return "books-get";
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
+    public ResponseEntity<List<Book>> saveBook(
+            @RequestBody final Book book
+    ) {
+        booksService.add(book);
+        System.out.println("Saved book: " + book);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(booksService.getAll());
     }
 
-    @PostMapping("/books")
-    public String listBooks(@ModelAttribute Book book){
-        books.add(book);
-        return "redirect:/books-list";
+    @RequestMapping(value = "/find", method = RequestMethod.POST)
+    public ResponseEntity<List<Book>> findBooks(
+            @RequestBody final Book book
+    ) {
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(booksService.findByNameIsbn(book.getName(),book.getIsbn()));
     }
 
-    @GetMapping("/books-list")
-    public String booksList(Model model) {
-        model.addAttribute("books", books);
-        return "books-list";
+    @RequestMapping(value = "/all", method = RequestMethod.GET)
+    public ResponseEntity<List<Book>> getAll() {
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(booksService.getAll());
     }
 }

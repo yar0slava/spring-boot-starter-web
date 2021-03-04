@@ -1,15 +1,16 @@
 package kma.topic3.webstarter.model;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode
 public class Book {
 
     String name;
-    String ISBN;
+    String isbn;
     String author;
 }
