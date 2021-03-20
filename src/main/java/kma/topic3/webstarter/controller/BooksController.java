@@ -34,7 +34,7 @@ public class BooksController {
 
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(booksService.findByNameIsbn(book.getName(),book.getIsbn()));
+                .body(booksService.findByIsbnNameAuthor(book.getIsbn(),book.getName(),book.getAuthor()));
     }
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)

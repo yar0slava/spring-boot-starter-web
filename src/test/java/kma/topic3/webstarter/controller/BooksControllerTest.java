@@ -35,7 +35,7 @@ class BooksControllerTest {
 
         byte[] book = BooksControllerTest.class.getResourceAsStream("/addRequest.json").readAllBytes();
 //        Book bookObj = objectMapper.convertValue(String.valueOf(book),Book.class);
-        Book bookObj = new Book("Harry Potter", "123456qwe", "J. K. Rowling");
+        Book bookObj = new Book("123456qwe","Harry Potter", "J. K. Rowling");
 
         when(booksService.getAll()).thenReturn(List.of(bookObj));
 
@@ -58,9 +58,9 @@ class BooksControllerTest {
 
         byte[] book = BooksControllerTest.class.getResourceAsStream("/addRequest.json").readAllBytes();
 //        Book bookObj = objectMapper.convertValue(String.valueOf(book),Book.class);
-        Book bookObj = new Book("Harry Potter", "123456qwe", "J. K. Rowling");
+        Book bookObj = new Book("123456qwe","Harry Potter", "J. K. Rowling");
 
-        when(booksService.findByNameIsbn(any(),any())).thenReturn(List.of(bookObj));
+        when(booksService.findByIsbnNameAuthor(any(),any(),any())).thenReturn(List.of(bookObj));
 
         mockMvc.perform(
                 post("/find")
@@ -70,7 +70,7 @@ class BooksControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().json(new String(BooksControllerTest.class.getResourceAsStream("/addResponse.json").readAllBytes())));
 
-        verify(booksService).findByNameIsbn("Harry Potter", "123456qwe");
+        verify(booksService).findByIsbnNameAuthor("123456qwe","Harry Potter", "J. K. Rowling");
     }
 
     @Test
@@ -79,7 +79,7 @@ class BooksControllerTest {
 
         byte[] book = BooksControllerTest.class.getResourceAsStream("/addRequest.json").readAllBytes();
 //        Book bookObj = objectMapper.convertValue(String.valueOf(book),Book.class);
-        Book bookObj = new Book("Harry Potter", "123456qwe", "J. K. Rowling");
+        Book bookObj = new Book("123456qwe","Harry Potter", "J. K. Rowling");
 
         when(booksService.getAll()).thenReturn(List.of(bookObj));
 
