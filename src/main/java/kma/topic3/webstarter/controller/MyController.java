@@ -1,6 +1,7 @@
 package kma.topic3.webstarter.controller;
 
 import kma.topic3.webstarter.model.Book;
+import kma.topic3.webstarter.service.BookRepository;
 import kma.topic3.webstarter.service.BooksService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequiredArgsConstructor
 public class MyController {
 
-    private final BooksService booksService;
+    private final BookRepository bookRepository;
 
     @RequestMapping("/")
     public String index() {
@@ -24,7 +25,7 @@ public class MyController {
     @GetMapping("/book/{isbn}")
     public String getBookByIsbn(@PathVariable String isbn, @ModelAttribute Book book, Model model) {
 
-        model.addAttribute("book", booksService.findByIsbn(isbn));
+        model.addAttribute("book", bookRepository.findById(isbn));
         return "book";
     }
 }
