@@ -1,0 +1,63 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Sign Up</title>
+</head>
+<body>
+<style>
+    table {
+        border-collapse: collapse;
+    }
+
+    table, th, td {
+        border: 1px solid black;
+        padding: 5px;
+    }
+
+    button {
+        padding: 5px;
+        margin: 5px;
+    }
+</style>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+<h3>Sign Up form</h3>
+
+<form id="signUpForm">
+    Your login: <input name="login">
+    <br/>
+    Password: <input name="password">
+    <br/>
+    <button type="save">Sign Up</button>
+</form>
+
+<a href="/">Main page</a>
+
+<script>
+    $(function () {
+        $('#signUpForm').submit(function (e) {
+            e.preventDefault();
+
+            $.ajax({
+                type: 'POST',
+                url: '/signup',
+                dataType: 'json',
+                data: JSON.stringify({
+                    login: $(this).find('[name=login]').val(),
+                    password: $(this).find('[name=password]').val()
+                }),
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('Content-Type', 'application/json')
+                },
+                // success: function (response) {
+                //
+                //     response.forEach(function (book) {
+                //         $books.append('<tr><td>' + book.name + '</td><td>' + book.password + '</td><td>' + book.author + '</td></tr>');
+                //     })
+                // }
+            });
+        });
+    });
+</script>
+
+</body>
+</html>

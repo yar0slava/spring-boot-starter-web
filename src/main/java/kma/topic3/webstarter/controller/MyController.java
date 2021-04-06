@@ -1,9 +1,9 @@
 package kma.topic3.webstarter.controller;
 
-import kma.topic3.webstarter.model.Book;
-import kma.topic3.webstarter.service.BookRepository;
-import kma.topic3.webstarter.service.BooksService;
+import kma.topic3.webstarter.model.entities.BookEntity;
+import kma.topic3.webstarter.database.BookRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,8 +22,19 @@ public class MyController {
         return "index";
     }
 
+    @GetMapping("/signup")
+    public String signUp() {
+        return "signup";
+    }
+
+    @GetMapping("/login")
+    public String logIn() {
+        return "login";
+    }
+
+    @PreAuthorize("isFullyAuthenticated()")
     @GetMapping("/book/{isbn}")
-    public String getBookByIsbn(@PathVariable String isbn, @ModelAttribute Book book, Model model) {
+    public String getBookByIsbn(@PathVariable String isbn, @ModelAttribute BookEntity book, Model model) {
 
         model.addAttribute("book", bookRepository.findById(isbn));
         return "book";
