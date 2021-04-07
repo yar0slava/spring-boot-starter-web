@@ -32,6 +32,8 @@
     <button type="save">Save</button>
 </form>
 
+<div id="saveResponse"></div>
+
 <h3>Books</h3>
 
 <div>
@@ -76,6 +78,7 @@
 
             var $books = $('#booksTable');
             $books.empty();
+            $("#saveResponse").empty();
 
             $.ajax({
                 type: 'POST',
@@ -91,10 +94,13 @@
                     xhr.setRequestHeader('Authorization', localStorage.getItem("token"))
                 },
                 success: function (response) {
-
                     response.forEach(function (book) {
                         $books.append('<tr><td>' + book.name + '</td><td>' + book.isbn + '</td><td>' + book.author + '</td></tr>');
+                        $("#saveResponse").text('OK:\n' + JSON.stringify(response, null, 4));
                     })
+                },
+                error: function (xhr) {
+                    $('#saveResponse').text('ERRORS:\n' + JSON.stringify(xhr.responseJSON, null, 4));
                 }
             });
         });

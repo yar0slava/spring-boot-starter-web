@@ -3,6 +3,8 @@ package kma.topic3.webstarter.model.entities;
 import java.util.List;
 
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
@@ -23,9 +25,11 @@ public class UserEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
+    @Pattern(regexp = "^[a-zA-Z0-9]*$", message = "login should contain only letters and digits")
     @Column(name = "login", unique = true)
     private String login;
 
+    @Size(min = 8, max = 20, message = "length of password should be between 8-20")
     @Column(name = "password")
     private String password;
 

@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -18,12 +19,13 @@ public class SignUpController {
     private final UserRepository userRepository;
     private final PermissionRepository permissionRepository;
 
+
     //admin password
     //yar0slava password
 
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
     public String signUp(
-            @RequestBody final UserEntity user
+            @Valid @RequestBody final UserEntity user
     ) {
         PermissionEntity permUser = new PermissionEntity();
         permUser.setPermission(Permission.USER);
